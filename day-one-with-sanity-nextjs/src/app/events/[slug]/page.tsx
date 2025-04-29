@@ -6,8 +6,9 @@ import { PortableText } from "@portabletext/react";
 import Image from "next/image";
 import Link from "next/link";
 import { notFound } from "next/navigation";
+import { defineQuery } from "next-sanity";
 
-const EVENT_QUERY = `*[
+const EVENT_QUERY = defineQuery(`*[
     _type == "event" &&
     slug.current == $slug
   ][0]{
@@ -16,7 +17,7 @@ const EVENT_QUERY = `*[
     "doorsOpen": coalesce(doorsOpen, 0),
     headline->,
     venue->
-}`;
+}`);
 
 const { projectId, dataset } = client.config();
 const urlFor = (source: SanityImageSource) =>
