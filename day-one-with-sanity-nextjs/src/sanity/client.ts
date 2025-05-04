@@ -8,7 +8,9 @@ export const client = createClient({
   apiVersion: "2024-11-01",
   useCdn: false,
   token: process.env.NEXT_PUBLIC_SANITY_TOKEN,
-  perspective: "published"
+  perspective: "published",
+  stega: { studioUrl: '/studio' },
+
 });
 
 export async function sanityFetch<const QueryString extends string>({

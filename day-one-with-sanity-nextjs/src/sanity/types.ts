@@ -77,6 +77,7 @@ export type Event = {
   name?: string;
   slug?: Slug;
   eventType?: "in-person" | "virtual";
+  format?: "in-person" | "virtual";
   date?: string;
   doorsOpen?: number;
   venue?: {
@@ -122,6 +123,73 @@ export type Event = {
     _key: string;
   }>;
   tickets?: string;
+  relatedPosts?: Array<{
+    _ref: string;
+    _type: "reference";
+    _weak?: boolean;
+    _key: string;
+    [internalGroqTypeReferenceTo]?: "event";
+  }>;
+};
+
+export type Artist = {
+  _id: string;
+  _type: "artist";
+  _createdAt: string;
+  _updatedAt: string;
+  _rev: string;
+  name?: string;
+  slug?: Slug;
+  image?: {
+    asset?: {
+      _ref: string;
+      _type: "reference";
+      _weak?: boolean;
+      [internalGroqTypeReferenceTo]?: "sanity.imageAsset";
+    };
+    media?: unknown;
+    hotspot?: SanityImageHotspot;
+    crop?: SanityImageCrop;
+    _type: "image";
+  };
+  age?: number;
+  description?: string;
+  photo?: {
+    asset?: {
+      _ref: string;
+      _type: "reference";
+      _weak?: boolean;
+      [internalGroqTypeReferenceTo]?: "sanity.imageAsset";
+    };
+    media?: unknown;
+    hotspot?: SanityImageHotspot;
+    crop?: SanityImageCrop;
+    _type: "image";
+  };
+};
+
+export type Venue = {
+  _id: string;
+  _type: "venue";
+  _createdAt: string;
+  _updatedAt: string;
+  _rev: string;
+  name?: string;
+  image?: {
+    asset?: {
+      _ref: string;
+      _type: "reference";
+      _weak?: boolean;
+      [internalGroqTypeReferenceTo]?: "sanity.imageAsset";
+    };
+    media?: unknown;
+    hotspot?: SanityImageHotspot;
+    crop?: SanityImageCrop;
+    _type: "image";
+  };
+  address?: string;
+  city?: string;
+  country?: string;
 };
 
 export type SanityImageCrop = {
@@ -181,35 +249,17 @@ export type SanityImageMetadata = {
   isOpaque?: boolean;
 };
 
-export type Artist = {
-  _id: string;
-  _type: "artist";
-  _createdAt: string;
-  _updatedAt: string;
-  _rev: string;
-  name?: string;
-};
-
-export type Venue = {
-  _id: string;
-  _type: "venue";
-  _createdAt: string;
-  _updatedAt: string;
-  _rev: string;
-  name?: string;
-};
-
 export type Slug = {
   _type: "slug";
   current?: string;
   source?: string;
 };
 
-export type AllSanitySchemaTypes = SanityImagePaletteSwatch | SanityImagePalette | SanityImageDimensions | SanityFileAsset | Geopoint | Event | SanityImageCrop | SanityImageHotspot | SanityImageAsset | SanityAssetSourceData | SanityImageMetadata | Artist | Venue | Slug;
+export type AllSanitySchemaTypes = SanityImagePaletteSwatch | SanityImagePalette | SanityImageDimensions | SanityFileAsset | Geopoint | Event | Artist | Venue | SanityImageCrop | SanityImageHotspot | SanityImageAsset | SanityAssetSourceData | SanityImageMetadata | Slug;
 export declare const internalGroqTypeReferenceTo: unique symbol;
 // Source: ../day-one-with-sanity-nextjs/src/app/events/[slug]/page.tsx
 // Variable: EVENT_QUERY
-// Query: *[    _type == "event" &&    slug.current == $slug  ][0]{  ...,  "date": coalesce(date, now()),  "doorsOpen": coalesce(doorsOpen, 0),  headline->,  venue->}
+// Query: *[    _type == "event" &&    slug.current == $slug  ][0]{    ...,    "date": coalesce(date, now()),    "doorsOpen": coalesce(doorsOpen, 0),    headline->,    venue->,      relatedEvents[]{    _key, // required for drag and drop    ...@->{_id, title, slug} // get fields from the referenced event  }}
 export type EVENT_QUERYResult = {
   _id: string;
   _type: "event";
@@ -219,6 +269,7 @@ export type EVENT_QUERYResult = {
   name?: string;
   slug?: Slug;
   eventType?: "in-person" | "virtual";
+  format?: "in-person" | "virtual";
   date: string;
   doorsOpen: number | 0;
   venue: {
@@ -228,6 +279,21 @@ export type EVENT_QUERYResult = {
     _updatedAt: string;
     _rev: string;
     name?: string;
+    image?: {
+      asset?: {
+        _ref: string;
+        _type: "reference";
+        _weak?: boolean;
+        [internalGroqTypeReferenceTo]?: "sanity.imageAsset";
+      };
+      media?: unknown;
+      hotspot?: SanityImageHotspot;
+      crop?: SanityImageCrop;
+      _type: "image";
+    };
+    address?: string;
+    city?: string;
+    country?: string;
   } | null;
   headline: {
     _id: string;
@@ -236,6 +302,33 @@ export type EVENT_QUERYResult = {
     _updatedAt: string;
     _rev: string;
     name?: string;
+    slug?: Slug;
+    image?: {
+      asset?: {
+        _ref: string;
+        _type: "reference";
+        _weak?: boolean;
+        [internalGroqTypeReferenceTo]?: "sanity.imageAsset";
+      };
+      media?: unknown;
+      hotspot?: SanityImageHotspot;
+      crop?: SanityImageCrop;
+      _type: "image";
+    };
+    age?: number;
+    description?: string;
+    photo?: {
+      asset?: {
+        _ref: string;
+        _type: "reference";
+        _weak?: boolean;
+        [internalGroqTypeReferenceTo]?: "sanity.imageAsset";
+      };
+      media?: unknown;
+      hotspot?: SanityImageHotspot;
+      crop?: SanityImageCrop;
+      _type: "image";
+    };
   } | null;
   image?: {
     asset?: {
@@ -268,6 +361,14 @@ export type EVENT_QUERYResult = {
     _key: string;
   }>;
   tickets?: string;
+  relatedPosts?: Array<{
+    _ref: string;
+    _type: "reference";
+    _weak?: boolean;
+    _key: string;
+    [internalGroqTypeReferenceTo]?: "event";
+  }>;
+  relatedEvents: null;
 } | null;
 
 // Source: ../day-one-with-sanity-nextjs/src/app/page.tsx
@@ -280,11 +381,23 @@ export type EVENTS_QUERYResult = Array<{
   date: string | null;
 }>;
 
+// Source: ../day-one-with-sanity-nextjs/src/sanity/queries.ts
+// Variable: PAGE_QUERY
+// Query: *[_type == "page" && slug.current == $slug][0]{  ...,  content[]{    ...,    _type == "faqs" => {      ...,      faqs[]->    }  }}
+export type PAGE_QUERYResult = null;
+// Variable: HOME_PAGE_QUERY
+// Query: *[_id == "siteSettings"][0]{  homePage->{    ...,    content[]{      ...,      _type == "faqs" => {        ...,        faqs[]->      }    }        }}
+export type HOME_PAGE_QUERYResult = {
+  homePage: null;
+} | null;
+
 // Query TypeMap
 import "@sanity/client";
 declare module "@sanity/client" {
   interface SanityQueries {
-    "*[\n    _type == \"event\" &&\n    slug.current == $slug\n  ][0]{\n  ...,\n  \"date\": coalesce(date, now()),\n  \"doorsOpen\": coalesce(doorsOpen, 0),\n  headline->,\n  venue->\n}": EVENT_QUERYResult;
+    "*[\n    _type == \"event\" &&\n    slug.current == $slug\n  ][0]{\n    ...,\n    \"date\": coalesce(date, now()),\n    \"doorsOpen\": coalesce(doorsOpen, 0),\n    headline->,\n    venue->,\n      relatedEvents[]{\n    _key, // required for drag and drop\n    ...@->{_id, title, slug} // get fields from the referenced event\n  }\n\n}": EVENT_QUERYResult;
     "*[\n  _type == \"event\"\n  && defined(slug.current)\n]{_id, name, slug, date}|order(date desc)": EVENTS_QUERYResult;
+    "*[_type == \"page\" && slug.current == $slug][0]{\n  ...,\n  content[]{\n    ...,\n    _type == \"faqs\" => {\n      ...,\n      faqs[]->\n    }\n  }\n}": PAGE_QUERYResult;
+    "*[_id == \"siteSettings\"][0]{\n  homePage->{\n    ...,\n    content[]{\n      ...,\n      _type == \"faqs\" => {\n        ...,\n        faqs[]->\n      }\n    }      \n  }\n}": HOME_PAGE_QUERYResult;
   }
 }

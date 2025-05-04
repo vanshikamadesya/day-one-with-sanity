@@ -9,14 +9,15 @@
     "start": "sanity start",
     "build": "sanity build",
     "deploy": "sanity deploy",
-    "deploy-graphql": "sanity graphql deploy"
+    "deploy-graphql": "sanity graphql deploy",
+    "typegen": "sanity codegen"
   },
   "keywords": [
     "sanity"
   ],
   "dependencies": {
+    "@sanity/presentation": "^2.0.0",
     "@sanity/vision": "^3.85.1",
-    "@sanity/visual-editing": "^2.13.18",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
     "sanity": "^3.85.1",

@@ -43,4 +43,38 @@ export const structure: StructureResolver = (S) =>
             S.divider(),
             S.documentTypeListItem('artist').title('Artists').icon(UsersIcon),
             S.documentTypeListItem('venue').title('Venues').icon(PinIcon),
+            S.divider(),
+            S.documentTypeListItem("page").title("Pages").icon(PinIcon),
+            S.documentTypeListItem("faq").title("FAQs").icon(PinIcon),
+            S.divider(),
+            // ...S.documentTypeListItems().filter(
+            //     (item) =>
+            //         item.getId() &&
+            //         !["event", "artist", "venue", "page", "faq"].includes(item.getId()!)
+            // ),
+
+            S.listItem()
+                .id("siteSettings")
+                .schemaType("siteSettings")
+                .title("Site Settings")
+                .child(
+                    S.editor()
+                        .id("siteSettings")
+                        .schemaType("siteSettings")
+                        .documentId("siteSettings")
+                ),
+            ...S.documentTypeListItems().filter(
+                (item) =>
+                    item.getId() &&
+                    ![
+                        "event",
+                        "artist",
+                        "venue",
+                        "page",
+                        "faq",
+                        "siteSettings"
+                    ].includes(item.getId()!)
+            ),
+
+
         ])

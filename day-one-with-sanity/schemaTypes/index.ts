@@ -1,5 +1,26 @@
 import { artistType } from "./artistType"
 import { eventType } from "./eventType"
 import { venueType } from "./venueType"
-
-export const schemaTypes = [eventType, artistType, venueType]
+import { pageType } from "./pageType";
+import { pageBuilderType } from "./pageBuilderType";
+import { faqType } from "./faqType";
+import { faqsType } from "./blocks/faqsType";
+import { featuresType } from "./blocks/featureType";
+import { heroType } from "./blocks/heroType";
+import { splitImageType } from "./blocks/splitImageType";
+import { blockContent } from "./blocks/blockContent";
+import { siteSettingsType } from "./siteSettingsType";
+export const schemaTypes = [
+    eventType,
+    artistType,
+    venueType,
+    pageType,
+    pageBuilderType,
+    faqType,
+    faqsType,
+    featuresType,
+    heroType,
+    splitImageType,
+    blockContent,
+    siteSettingsType
+]

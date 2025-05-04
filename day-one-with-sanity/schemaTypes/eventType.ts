@@ -2,8 +2,6 @@ import { defineField, defineType } from 'sanity'
 import { CalendarIcon } from '@sanity/icons'
 import { DoorsOpenInput } from './components/DoorsOpenInput'
 
-
-
 export const eventType = defineType({
   name: 'event',
   title: 'Event',
@@ -101,6 +99,12 @@ export const eventType = defineType({
       type: 'url',
       group: 'details',
     }),
+    defineField({
+      name: "relatedEvents",
+      type: "array",
+      of: [{ type: "reference", to: { type: "event" } }],
+    }),
+
   ],
   // Update the preview key in the schema
   preview: {
