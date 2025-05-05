@@ -12,6 +12,7 @@ import {
   projectUsersWidget,
   projectInfoWidget,
 } from "@sanity/dashboard";
+import { seoMetaFields } from 'sanity-plugin-seo'
 // import { catsWidget } from "sanity-plugin-dashboard-widget-cats";
 
 export default defineConfig({
@@ -41,6 +42,7 @@ export default defineConfig({
       // catsWidget(),
     ]
   }),
+  seoMetaFields (),
   presentationTool({
     // resolve,
     previewUrl: {

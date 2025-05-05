@@ -10,6 +10,7 @@ import { heroType } from "./blocks/heroType";
 import { splitImageType } from "./blocks/splitImageType";
 import { blockContent } from "./blocks/blockContent";
 import { siteSettingsType } from "./siteSettingsType";
+import { seoType } from "./seoType";
 export const schemaTypes = [
     eventType,
     artistType,
@@ -22,5 +23,6 @@ export const schemaTypes = [
     heroType,
     splitImageType,
     blockContent,
-    siteSettingsType
+    siteSettingsType,
+    seoType,
 ]
