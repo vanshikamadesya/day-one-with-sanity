@@ -6,6 +6,8 @@ import { structure } from './structure'
 import { defaultDocumentNode } from './structure/defaultDocumentNode'
 import { presentationTool } from 'sanity/presentation'
 import { resolve } from '../day-one-with-sanity-nextjs/src/sanity/presentation/resolve'
+import { assist } from '@sanity/assist'
+
 import {
   dashboardTool,
   sanityTutorialsWidget,
@@ -34,7 +36,7 @@ export default defineConfig({
     defaultDocumentNode
   }),
   visionTool(),
-  dashboardTool({ 
+  dashboardTool({
     widgets: [
       sanityTutorialsWidget(),
       projectInfoWidget(),
@@ -42,7 +44,8 @@ export default defineConfig({
       // catsWidget(),
     ]
   }),
-  seoMetaFields (),
+  seoMetaFields(),
+  assist(),
   presentationTool({
     // resolve,
     previewUrl: {

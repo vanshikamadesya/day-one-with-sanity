@@ -31,8 +31,12 @@ export const pageType = defineType({
         }),
         defineField({
             name: "seo",
-            type: "seo", 
-        })
+            type: "seo",
+        }),
+        defineField({
+            name: "social",
+            type: "social",
+        }),
     ],
     preview: {
         select: {

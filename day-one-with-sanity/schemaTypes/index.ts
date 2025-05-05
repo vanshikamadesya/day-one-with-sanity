@@ -11,6 +11,9 @@ import { splitImageType } from "./blocks/splitImageType";
 import { blockContent } from "./blocks/blockContent";
 import { siteSettingsType } from "./siteSettingsType";
 import { seoType } from "./seoType";
+import { redirectType } from "./redirectType";
+import { socialType } from "./socialType";
+
 export const schemaTypes = [
     eventType,
     artistType,
@@ -25,4 +28,6 @@ export const schemaTypes = [
     blockContent,
     siteSettingsType,
     seoType,
+    redirectType,
+    socialType,
 ]

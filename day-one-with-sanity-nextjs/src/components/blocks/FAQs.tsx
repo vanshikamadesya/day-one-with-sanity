@@ -1,4 +1,5 @@
 import { PortableText } from "@portabletext/react";
+import { FAQPage, WithContext } from "schema-dts";
 
 interface FAQ {
     _key: string;
@@ -12,15 +13,34 @@ interface FAQsProps {
     title?: string;
     faqs?: FAQ[];
 }
+const generateFaqData = (faqs: FAQsProps["faqs"]): WithContext<FAQPage> => ({
+    "@context": "https://schema.org",
+    "@type": "FAQPage",
+    mainEntity: faqs?.map((faq) => ({
+        "@type": "Question",
+        name: faq.title!,
+        acceptedAnswer: {
+            "@type": "Answer",
+            text: faq.text!,
+        },
+    })),
+});
 
-export function FAQs(props: FAQsProps) {
-    const { title, faqs } = props;
+
+export function FAQs({ _key, title, faqs }: FAQsProps) {
+    const faqData = generateFaqData(faqs);
 
     return (
         <section className="container mx-auto py-16">
+            <script
+                type="application/ld+json"
+                dangerouslySetInnerHTML={{ __html: JSON.stringify(faqData) }}
+            />
+
             {title && (
                 <h2 className="text-3xl font-bold text-center mb-12">{title}</h2>
             )}
+
             <div className="max-w-3xl mx-auto space-y-8">
                 {faqs?.map((faq) => (
                     <div key={faq._key} className="space-y-4">
