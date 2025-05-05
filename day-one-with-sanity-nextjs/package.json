@@ -10,10 +10,12 @@
   },
   "dependencies": {
     "@portabletext/react": "^3.2.1",
+    "@sanity/client": "^7.0.0",
     "@sanity/image-url": "^1.1.0",
+    "@sanity/visual-editing": "^2.13.20",
     "framer-motion": "^12.9.1",
     "next": "15.3.1",
-    "next-sanity": "^9.10.2",
+    "next-sanity": "^9.10.6",
     "react": "^19.0.0",
     "react-dom": "^19.0.0"
   },

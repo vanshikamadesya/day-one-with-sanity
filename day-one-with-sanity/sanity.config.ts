@@ -29,7 +29,8 @@ export default defineConfig({
     // resolve,
     previewUrl: {
       origin: 'http://localhost:3000',
-      preview: '/events/[slug]',
+      // preview: '/events/[slug]',
+      preview: '/',
       draftMode: {
         enable: '/api/draft-mode/enable',
         disable: '/api/diraft-mode/disable'
