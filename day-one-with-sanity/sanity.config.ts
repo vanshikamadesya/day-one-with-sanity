@@ -6,6 +6,14 @@ import { structure } from './structure'
 import { defaultDocumentNode } from './structure/defaultDocumentNode'
 import { presentationTool } from 'sanity/presentation'
 import { resolve } from '../day-one-with-sanity-nextjs/src/sanity/presentation/resolve'
+import {
+  dashboardTool,
+  sanityTutorialsWidget,
+  projectUsersWidget,
+  projectInfoWidget,
+} from "@sanity/dashboard";
+// import { catsWidget } from "sanity-plugin-dashboard-widget-cats";
+
 export default defineConfig({
   name: 'default',
   title: 'Day One With Sanity',
@@ -25,6 +33,14 @@ export default defineConfig({
     defaultDocumentNode
   }),
   visionTool(),
+  dashboardTool({ 
+    widgets: [
+      sanityTutorialsWidget(),
+      projectInfoWidget(),
+      projectUsersWidget(),
+      // catsWidget(),
+    ]
+  }),
   presentationTool({
     // resolve,
     previewUrl: {
