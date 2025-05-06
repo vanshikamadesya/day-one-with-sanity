@@ -32,6 +32,16 @@ export const venueType = defineType({
             name: 'country',
             type: 'string',
           }),
+          defineField({
+            name: 'slug',
+            title: 'Slug',
+            type: 'slug',
+            options: {
+              source: 'name',
+              maxLength: 96,
+            },
+          }),
+          
     ],
 
     // preview section

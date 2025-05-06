@@ -44,6 +44,35 @@ export const EVENT_SLUGS_QUERY = `
 `;
 
 
+// Define the query to fetch a single venue by its slug
+export const VENUE_QUERY = `
+  *[_type == "venue" && slug.current == $slug][0]{
+    _id,
+    name,
+    slug,
+    image,
+    address,
+    city,
+    country,
+    description,
+    events[]->{
+      _id,
+      name,
+      date
+    }
+  }
+`;
+
+// Define the query to fetch all venue slugs
+export const VENUE_SLUGS_QUERY = `
+  *[_type == "venue" && defined(slug.current)]{
+    'slug': slug.current,
+    name
+  }
+`;
+
+
+
 export const PAGE_QUERY =
   defineQuery(`*[_type == "page" && slug.current == $slug][0]{
   ...,

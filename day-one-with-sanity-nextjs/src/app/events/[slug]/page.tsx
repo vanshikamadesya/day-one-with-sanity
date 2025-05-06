@@ -67,7 +67,6 @@ export default async function EventPage({
 
     return (
         <>
-            {/* <VisualEditing /> */}
             <main className="container mx-auto grid gap-12 p-12">
                 <div className="mb-4">
                     <Link href="/">← Back to events</Link>

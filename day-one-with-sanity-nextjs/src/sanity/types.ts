@@ -532,6 +532,27 @@ export type EVENTS_QUERYResult = Array<{
   date: string | null;
 }>;
 
+// Source: ../day-one-with-sanity-nextjs/src/app/venues/page.tsx
+// Variable: VENUES_QUERY
+// Query: *[_type == "venue"]{  _id,  name,  slug,  image} | order(name asc)
+export type VENUES_QUERYResult = Array<{
+  _id: string;
+  name: string | null;
+  slug: null;
+  image: {
+    asset?: {
+      _ref: string;
+      _type: "reference";
+      _weak?: boolean;
+      [internalGroqTypeReferenceTo]?: "sanity.imageAsset";
+    };
+    media?: unknown;
+    hotspot?: SanityImageHotspot;
+    crop?: SanityImageCrop;
+    _type: "image";
+  } | null;
+}>;
+
 // Source: ../day-one-with-sanity-nextjs/src/sanity/queries.ts
 // Variable: PAGE_QUERY
 // Query: *[_type == "page" && slug.current == $slug][0]{  ...,  "seo": {    "title": coalesce(seo.title, title, ""),    "description": coalesce(seo.description,  ""),    "image": seo.image,    "noIndex": seo.noIndex == true  },  content[]{    ...,    _type == "faqs" => {      ...,faqs[]->{  _id,  title,  body,  "text": pt::text(body)}    }  }}
@@ -733,6 +754,7 @@ declare module "@sanity/client" {
   interface SanityQueries {
     "*[\n    _type == \"event\" &&\n    slug.current == $slug\n  ][0]{\n    ...,\n    \"date\": coalesce(date, now()),\n    \"doorsOpen\": coalesce(doorsOpen, 0),\n    headline->,\n    venue->,\n      relatedEvents[]{\n    _key, // required for drag and drop\n    ...@->{_id, title, slug} // get fields from the referenced event\n  }\n\n}": EVENT_QUERYResult;
     "*[\n  _type == \"event\"\n  && defined(slug.current)\n]{_id, name, slug, date}|order(date desc)": EVENTS_QUERYResult;
+    "*[_type == \"venue\"]{\n  _id,\n  name,\n  slug,\n  image\n} | order(name asc)": VENUES_QUERYResult;
     "*[_type == \"page\" && slug.current == $slug][0]{\n  ...,\n  \"seo\": {\n    \"title\": coalesce(seo.title, title, \"\"),\n    \"description\": coalesce(seo.description,  \"\"),\n    \"image\": seo.image,\n    \"noIndex\": seo.noIndex == true\n  },\n  content[]{\n    ...,\n    _type == \"faqs\" => {\n      ...,\nfaqs[]->{\n  _id,\n  title,\n  body,\n  \"text\": pt::text(body)\n}    }\n  }\n}": PAGE_QUERYResult;
     "*[_id == \"siteSettings\"][0]{\n  homePage->{\n    ...,\n    content[]{\n      ...,\n      _type == \"faqs\" => {\n        ...,\nfaqs[]->{\n  _id,\n  title,\n  body,\n  \"text\": pt::text(body)\n}      }\n    }      \n  }\n}": HOME_PAGE_QUERYResult;
     "\n  *[_type == \"redirect\" && isEnabled == true] {\n      source,\n      destination,\n      permanent\n  }\n": REDIRECTS_QUERYResult;
