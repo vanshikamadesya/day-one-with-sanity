@@ -1,9 +1,10 @@
 import { client } from "@/sanity/client";
 import { sanityFetch } from "@/sanity/live";
-import { Metadata } from "next";
 import { urlFor } from "@/sanity/urlFor";
 
+
 const SINGLE_VENUE_QUERY = `*[_type == "venue" && slug.current == $slug][0]{
+  _id,
   name,
   image,
   address,
@@ -12,18 +13,31 @@ const SINGLE_VENUE_QUERY = `*[_type == "venue" && slug.current == $slug][0]{
 }`;
 
 export async function generateStaticParams() {
-    const slugs = await client.fetch(`*[_type == "venue" && defined(slug.current)][].slug.current`);
-    return slugs.map((slug: string) => ({ slug }));
-  }
-  
+  const slugs: string[] = await client.fetch(
+    `*[_type == "venue" && defined(slug.current)][].slug.current`
+  );
+  console.log("Slug received:", slugs);
 
+  return slugs.map((slug) => ({ slug }));
+}
+
+// Main page component
 export default async function VenuePage({ params }: { params: { slug: string } }) {
-  console.log("Params received:", params); // Debugging: Log the params object
-  console.log("Fetching venue with slug:", params.slug); // Debugging: Log the slug being used
-  const { data: venue } = await sanityFetch({ query: SINGLE_VENUE_QUERY, params });
+    console.log("Params received:", params);
+  const slug = params?.slug;
+
+  if (!slug) {
+    console.error("Missing slug param in route.");
+    return <p className="p-10">Invalid venue route</p>;
+  }
+
+  const { data: venue } = await sanityFetch({
+    query: SINGLE_VENUE_QUERY,
+    params: { slug },
+  });
 
   if (!venue) {
-    console.error("Venue not found for slug:", params.slug); // Debugging: Log if venue is not found
+    console.error("Venue not found for slug:", slug);
     return <p className="p-10">Venue not found</p>;
   }
 

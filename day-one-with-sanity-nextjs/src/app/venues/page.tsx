@@ -12,6 +12,7 @@ const VENUES_QUERY = defineQuery(`*[_type == "venue"]{
 
 export default async function VenuesPage() {
   const { data: venues } = await sanityFetch({ query: VENUES_QUERY });
+  console.log("Venue slugs:", venues.map(v => v.slug?.current));
 
   return (
     <main className="flex bg-gray-100 min-h-screen flex-col p-24 gap-12">
@@ -20,6 +21,8 @@ export default async function VenuesPage() {
         {venues.map((venue) => (
           <li key={venue._id} className="bg-white p-4 rounded-lg shadow">
             <Link href={`/venues/${venue.slug?.current}`} className="block hover:underline">
+        
+
               <h2 className="text-xl font-semibold">{venue.name}</h2>
               {venue.image && (
                 <img
